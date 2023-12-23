@@ -11,14 +11,14 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @Entity
-public class User extends Person{
+public class SocialUser extends Person{
     private String nickName;
     private boolean active;
     private String imgAvatarUrl;
     private String borderColorImg;
     private LocalDate creationDate;
 
-    public User(String name, String lastName, String password, String email, Role role, String nickName, boolean active, String imgAvatarUrl, String borderColorImg, LocalDate creationDate) {
+    public SocialUser(String name, String lastName, String password, String email, Role role, String nickName, boolean active, String imgAvatarUrl, String borderColorImg, LocalDate creationDate) {
         super(name, lastName, password, email, role);
         this.nickName = nickName;
         this.active = active;

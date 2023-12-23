@@ -1,4 +1,4 @@
 package com.DreamCompany.IDreamedThat.services;
 
-public interface ServiceUser {
+public interface ServiceSocialUser {
 }
