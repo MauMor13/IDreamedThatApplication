@@ -1,7 +1,6 @@
 package com.DreamCompany.IDreamedThat;
 
 import com.DreamCompany.IDreamedThat.models.Admin;
-import com.DreamCompany.IDreamedThat.models.SocialUser;
 import com.DreamCompany.IDreamedThat.services.ServicePerson;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

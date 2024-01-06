@@ -21,8 +21,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5' // JWT API
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5' // JWT Implementación
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5' // JWT Implementation
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // JWT Jackson
+	implementation 'com.amazonaws:aws-java-sdk:1.12.429'//AWS SDK For Java
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'//Spring Cloud AWS Starter
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
