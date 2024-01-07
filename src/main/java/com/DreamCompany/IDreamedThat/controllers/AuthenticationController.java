@@ -20,6 +20,7 @@ public class AuthenticationController {
         this.jwtService = jwtService;
         this.authenticationService = authenticationService;
     }
+
     @GetMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody PersonLoginDTO personLoginDTO) {
         Person authenticatedPerson = authenticationService.authenticate(personLoginDTO);
@@ -29,8 +30,10 @@ public class AuthenticationController {
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
         return ResponseEntity.ok(loginResponse);
     }
+
     @PostMapping("/signup")
     public ResponseEntity<Object> registerSocialUser(@RequestBody SocialUserSignupDTO socialUserSignupDTO) {
         return authenticationService.SocialUserSignup(socialUserSignupDTO);
     }
+
 }
