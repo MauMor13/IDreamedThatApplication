@@ -1,15 +1,13 @@
 package com.DreamCompany.IDreamedThat.controllers;
 
 import com.DreamCompany.IDreamedThat.DTOs.PersonLoginDTO;
+import com.DreamCompany.IDreamedThat.DTOs.SocialUserSignupDTO;
 import com.DreamCompany.IDreamedThat.configurations.securityServices.AuthenticationService;
 import com.DreamCompany.IDreamedThat.configurations.securityServices.JwtService;
 import com.DreamCompany.IDreamedThat.models.LoginResponse;
 import com.DreamCompany.IDreamedThat.models.Person;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
@@ -30,5 +28,9 @@ public class AuthenticationController {
         loginResponse.setToken(jwtToken);
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
         return ResponseEntity.ok(loginResponse);
+    }
+    @PostMapping("/signup")
+    public ResponseEntity<Object> registerSocialUser(@RequestBody SocialUserSignupDTO socialUserSignupDTO) {
+        return authenticationService.SocialUserSignup(socialUserSignupDTO);
     }
 }

@@ -32,6 +32,10 @@ public class Person implements UserDetails {
         this.email = email;
         this.role = role;
     }
+    public Person(String password, String email){
+        this.password = password;
+        this.email = email;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.name());

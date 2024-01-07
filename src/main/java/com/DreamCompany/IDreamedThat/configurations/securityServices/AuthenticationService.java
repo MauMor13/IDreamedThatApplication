@@ -1,8 +1,12 @@
 package com.DreamCompany.IDreamedThat.configurations.securityServices;
 
 import com.DreamCompany.IDreamedThat.DTOs.PersonLoginDTO;
+import com.DreamCompany.IDreamedThat.DTOs.SocialUserSignupDTO;
 import com.DreamCompany.IDreamedThat.models.Person;
+import com.DreamCompany.IDreamedThat.models.SocialUser;
 import com.DreamCompany.IDreamedThat.services.ServicePerson;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,5 +45,17 @@ public class AuthenticationService {
         );
         SecurityContextHolder.getContext().setAuthentication(auth);
         return person;
+    }
+    public ResponseEntity<Object> SocialUserSignup(SocialUserSignupDTO socialUserSignupDTO) {
+        if(servicePerson.existsByEmail(socialUserSignupDTO.getEmail())){
+            return new ResponseEntity<>("Email already registered", HttpStatus.CONFLICT);
+        }
+        SocialUser socialUser = new SocialUser(
+                socialUserSignupDTO.getEmail(),
+                socialUserSignupDTO.getNickName(),
+                passwordEncoder.encode(socialUserSignupDTO.getPassword())
+                );
+        servicePerson.save(socialUser);
+        return new ResponseEntity<>("Correctly registered",HttpStatus.CREATED);
     }
 }

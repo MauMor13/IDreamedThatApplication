@@ -21,4 +21,8 @@ public class SocialUser extends Person{
     public SocialUser(String name, String lastName, String password, String email) {
         super(name, lastName, password, email, Role.USER);
     }
+    public SocialUser(String email, String nickName, String password){
+        super(password, email);
+        this.nickName = nickName;
+    }
 }
