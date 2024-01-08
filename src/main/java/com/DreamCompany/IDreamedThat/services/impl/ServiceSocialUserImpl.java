@@ -11,4 +11,6 @@ public class ServiceSocialUserImpl implements ServiceSocialUser {
     public ServiceSocialUserImpl(RepositorySocialUser repositorySocialUser) {
         this.repositorySocialUser = repositorySocialUser;
     }
+    @Override
+    public boolean existsByNickName(String nickname){ return  this.repositorySocialUser.existsByNickName(nickname); }
 }

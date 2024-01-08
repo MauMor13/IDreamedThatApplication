@@ -6,5 +6,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
 public interface RepositorySocialUser extends JpaRepository<SocialUser, Long> {
-
+    boolean existsByNickName(String nickname);
 }
