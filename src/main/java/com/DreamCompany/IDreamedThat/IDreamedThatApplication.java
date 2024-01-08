@@ -16,7 +16,7 @@ public class IDreamedThatApplication {
 	}
 	@Bean
 	public CommandLineRunner initDataBase( ServicePerson servicePerson,
-											PasswordEncoder passwordEncoder){
+										   PasswordEncoder passwordEncoder){
 		return (args) -> {
 			servicePerson.save(new Admin("Mauricio", "Mores", passwordEncoder.encode("Mauri1312"), "mauri.f.mores@gmail.com"));
 		};
