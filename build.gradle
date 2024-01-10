@@ -25,6 +25,7 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // JWT Jackson
 	implementation 'com.amazonaws:aws-java-sdk:1.12.429'//AWS SDK For Java
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'//Spring Cloud AWS Starter
+	implementation 'org.springframework.boot:spring-boot-starter-mail:3.2.1' // email message
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
