@@ -32,9 +32,10 @@ public class Person implements UserDetails {
         this.email = email;
         this.role = role;
     }
-    public Person(String password, String email){
+    public Person(String password, String email, Role role){
         this.password = password;
         this.email = email;
+        this.role = role;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

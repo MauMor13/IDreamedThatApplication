@@ -1,10 +1,10 @@
 package com.DreamCompany.IDreamedThat.models;
 
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@NoArgsConstructor
+@Component
 public class Keystore {
     private static final Map<String, Recovery> recoveryStorage = new HashMap<>();
 
@@ -12,16 +12,16 @@ public class Keystore {
             Comparator.comparing(e -> e.getValue().getRequestedDate())
     );
 
-    public static void addKey(String email, Recovery recovery){
-        recoveryStorage.put(email, recovery);
+    public static void addKey(String key, Recovery recovery){
+        recoveryStorage.put(key, recovery);
     }
 
-    public static String getterKey(String email){
-        return recoveryStorage.get(email).getKeyGenerated();
+    public static String getterEmail(String key){
+        return recoveryStorage.get(key).getEmailVerification();
     }
 
-    public static void clearKey(String email){
-        recoveryStorage.remove(email);
+    public static void clearKey(String key){
+        recoveryStorage.remove(key);
     }
 
     public static void clearStorage(){

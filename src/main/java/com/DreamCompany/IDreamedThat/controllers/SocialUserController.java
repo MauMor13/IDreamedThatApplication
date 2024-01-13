@@ -2,9 +2,11 @@ package com.DreamCompany.IDreamedThat.controllers;
 
 import com.DreamCompany.IDreamedThat.DTOs.SocialUserSignupDTO;
 import com.DreamCompany.IDreamedThat.services.ServiceSocialUser;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.io.UnsupportedEncodingException;
 
 @RequestMapping("/api")
 @RestController
@@ -14,7 +16,7 @@ public class SocialUserController {
     public SocialUserController(ServiceSocialUser serviceSocialUser) { this.serviceSocialUser = serviceSocialUser; }
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerSocialUser(@RequestBody SocialUserSignupDTO socialUserSignupDTO) {
+    public ResponseEntity<Object> registerSocialUser(@RequestBody SocialUserSignupDTO socialUserSignupDTO) throws MessagingException, UnsupportedEncodingException {
         return serviceSocialUser.socialUserSignup(socialUserSignupDTO);
     }
 

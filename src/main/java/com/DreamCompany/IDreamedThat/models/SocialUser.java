@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Entity
 public class SocialUser extends Person{
     private String nickName;
-    private boolean active = true;
+    private boolean active = false;
     private String imgAvatarUrl;
     private String borderColorImg;
     private LocalDate creationDate = LocalDate.now();
@@ -21,7 +21,7 @@ public class SocialUser extends Person{
         super(name, lastName, password, email, Role.USER);
     }
     public SocialUser(String email, String nickName, String password){
-        super(password, email);
+        super(password, email,Role.USER);
         this.nickName = nickName;
     }
 }

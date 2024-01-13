@@ -8,7 +8,6 @@ import com.DreamCompany.IDreamedThat.models.Person;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 
 @RequestMapping("/api")
 @RestController
