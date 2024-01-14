@@ -75,6 +75,7 @@ public class ServiceSocialUserImpl implements ServiceSocialUser {
             SocialUser userRegister = this.findByEmail(email);
             userRegister.setActive(true);
             servicePerson.save(userRegister);
+            Keystore.clearKey(key);
             //direccion a la cual enviar al usuario luego de verificar email
             response.setHeader("Location", "/direccion.html");
             response.setStatus(HttpServletResponse.SC_FOUND);

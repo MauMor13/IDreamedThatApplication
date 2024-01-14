@@ -1,5 +1,6 @@
 package com.DreamCompany.IDreamedThat.models;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -23,7 +24,7 @@ public class Keystore {
     public static void clearKey(String key){
         recoveryStorage.remove(key);
     }
-
+    @Scheduled(cron = "0 0 0 * * ?")
     public static void clearStorage(){
         LocalDateTime oneDayAgo = LocalDateTime.now().minusDays(1);
         while (!dateQueue.isEmpty() && dateQueue.peek().getValue().getRequestedDate().isBefore(oneDayAgo)) {
