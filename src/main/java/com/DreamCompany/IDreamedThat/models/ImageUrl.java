@@ -15,7 +15,9 @@ public class ImageUrl {
     private long id;
     private String imgUrl;
     private boolean allowed = true;
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    //relacion con los posteos de sueños
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "postDream_id")
     private PostDream postDream;
 
