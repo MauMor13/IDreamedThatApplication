@@ -19,9 +19,11 @@ public class Comment {
     private LocalDateTime dateTime;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "social_user_id")
     private SocialUser socialUser;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_dream_id")
     private PostDream postDream;
 
     public Comment(String text, LocalDateTime dateTime) {

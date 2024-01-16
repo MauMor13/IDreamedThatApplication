@@ -1,9 +1,6 @@
 package com.DreamCompany.IDreamedThat.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +16,14 @@ public class LikeDream {
     private long id;
     private LocalDate likeDate;
     private LikesType likesType;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "social_user_id")
+    private SocialUser socialUser;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_dream_id")
+    private PostDream postDream;
 
     public LikeDream(LocalDate likeDate, LikesType likesType) {
         this.likeDate = likeDate;

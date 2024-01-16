@@ -32,6 +32,10 @@ public class PostDream {
     @OneToMany(mappedBy = "postDream", fetch = FetchType.EAGER)
     private Set<Comment> comments = new HashSet<>();
 
+    //relacion con likes
+    @OneToMany(mappedBy = "postDream", fetch = FetchType.EAGER)
+    private Set<LikeDream> likeDreams = new HashSet<>();
+
     //relacion con usuario
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "social_user_id", nullable = false)

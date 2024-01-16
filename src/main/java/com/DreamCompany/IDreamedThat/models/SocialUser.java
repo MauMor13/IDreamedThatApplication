@@ -27,6 +27,9 @@ public class SocialUser extends Person{
     @OneToMany(mappedBy = "socialUser", fetch = FetchType.EAGER)
     private Set<Comment> comments = new HashSet<>();
 
+    @OneToMany(mappedBy = "socialUser", fetch = FetchType.EAGER)
+    private Set<LikeDream> likeDreams = new HashSet<>();
+
     public SocialUser(String name, String lastName, String password, String email) {
         super(name, lastName, password, email, Role.USER);
     }
