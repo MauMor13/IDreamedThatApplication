@@ -24,11 +24,25 @@ public class SocialUser extends Person{
     @OneToMany(mappedBy = "socialUser", fetch = FetchType.EAGER)
     private Set<PostDream> postDreams = new HashSet<>();
 
+    @OneToMany(mappedBy = "socialUser", fetch = FetchType.EAGER)
+    private Set<Comment> comments = new HashSet<>();
+
     public SocialUser(String name, String lastName, String password, String email) {
         super(name, lastName, password, email, Role.USER);
     }
+
     public SocialUser(String email, String nickName, String password){
         super(password, email,Role.USER);
         this.nickName = nickName;
+    }
+
+    public void addPostDream(PostDream postDream){
+        postDream.setSocialUser(this);
+        this.postDreams.add(postDream);
+    }
+
+    public void addComment(Comment comment){
+        comment.setSocialUser(this);
+        this.comments.add(comment);
     }
 }

@@ -18,6 +18,12 @@ public class Comment {
     private String text;
     private LocalDateTime dateTime;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private SocialUser socialUser;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private PostDream postDream;
+
     public Comment(String text, LocalDateTime dateTime) {
         this.text = text;
         this.dateTime = dateTime;

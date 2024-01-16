@@ -17,6 +17,7 @@ public class PostDream {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
+    private boolean active = true;
     @Lob
     private String story;
     private boolean edited = false;
@@ -26,6 +27,10 @@ public class PostDream {
     //relacion con imagenes en el sueño
     @OneToMany(mappedBy = "postDream", fetch = FetchType.EAGER)
     private Set<ImageUrl> imagesDream = new HashSet<>();
+
+    //relacion con comentarios
+    @OneToMany(mappedBy = "postDream", fetch = FetchType.EAGER)
+    private Set<Comment> comments = new HashSet<>();
 
     //relacion con usuario
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -57,4 +62,8 @@ public class PostDream {
         categories.add(category);
     }
 
+    public void addComment(Comment comment){
+        comment.setPostDream(this);
+        this.comments.add(comment);
+    }
 }
