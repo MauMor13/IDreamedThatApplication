@@ -19,9 +19,6 @@ public class IDreamedThatApplication {
 	@Bean
 	public CommandLineRunner initDataBase( ServicePerson servicePerson,
 										   ServiceCategory serviceCategory,
-										   ServiceComment serviceComment,
-										   ServiceLikeDream serviceLikeDream,
-										   ServicePostDream servicePostDream,
 										   PasswordEncoder passwordEncoder){
 		return (args) -> {
 			servicePerson.save(new Admin("Mauricio", "Mores", passwordEncoder.encode("Mauri1312"), "mauri.f.mores@gmail.com"));
@@ -30,7 +27,10 @@ public class IDreamedThatApplication {
 			primeUser.setActive(true);
 			servicePerson.save(primeUser);
 
-			serviceCategory.save(new Category(""));
+			serviceCategory.save(new Category("Fantasy"));
+			serviceCategory.save(new Category("Horror"));
+			serviceCategory.save(new Category("Recurrent"));
+			serviceCategory.save(new Category("Illogical"));
 
 		};
 	}
