@@ -13,7 +13,9 @@ public class ImageUrl {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String imgUrl;
+
     private boolean allowed = true;
 
     //relacion con los posteos de sueños
