@@ -38,8 +38,8 @@ public class SecurityConfiguration {
                 .headers((headers)-> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 //line config x-frame-options for console h2
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/admin/**")).hasRole("USER_ADMIN")
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/user/**")).hasRole("USER_USER")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/admin/**")).hasRole("ADMIN")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/user/**")).hasRole("USER")
                         .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll() //permitAll for h2 console proof
                         .requestMatchers(new AntPathRequestMatcher("/api/signup")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/login")).permitAll()

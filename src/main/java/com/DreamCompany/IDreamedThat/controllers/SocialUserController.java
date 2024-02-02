@@ -36,11 +36,16 @@ public class SocialUserController {
         serviceSocialUser.confirmRegistration(token, response);
     }
 
-    @PostMapping("/user/newpost")
+    @PostMapping("/user/new_post")
     public ResponseEntity<Object> newPostDream(@ModelAttribute @Valid NewPostDreamDTO newPostDreamDTO, BindingResult result) throws IOException {
         if (result.hasErrors()) {
             return new ResponseEntity<>("Validation error in parameters",HttpStatus.BAD_REQUEST);
         }
         return servicePostDream.newPostDream(newPostDreamDTO);
+    }
+
+    @GetMapping("/user/control")
+    public ResponseEntity<Object> controlMethod (){
+        return new ResponseEntity<>("total ok", HttpStatus.OK);
     }
 }
