@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,7 +15,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.List;
 
 @Configuration
@@ -43,6 +41,8 @@ public class SecurityConfiguration {
                         .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll() //permitAll for h2 console proof
                         .requestMatchers(new AntPathRequestMatcher("/api/signup")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/login")).permitAll()
+                        //.requestMatchers(new AntPathRequestMatcher("/s3/**")).permitAll()
+                        //control for s3 image upload
                         .requestMatchers(new AntPathRequestMatcher("/api/confirm-registration")).permitAll()
                         .anyRequest().authenticated())
 

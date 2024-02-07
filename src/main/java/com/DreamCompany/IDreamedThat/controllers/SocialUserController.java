@@ -8,10 +8,10 @@ import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -36,8 +36,8 @@ public class SocialUserController {
         serviceSocialUser.confirmRegistration(token, response);
     }
 
-    @PostMapping("/user/new_post")
-    public ResponseEntity<Object> newPostDream(@ModelAttribute @Valid NewPostDreamDTO newPostDreamDTO, BindingResult result) throws IOException {
+    @PostMapping(value = "/user/new_post",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> newPostDream(@RequestPart("newPostDreamDTO") @Valid NewPostDreamDTO newPostDreamDTO, BindingResult result) throws IOException {
         if (result.hasErrors()) {
             return new ResponseEntity<>("Validation error in parameters",HttpStatus.BAD_REQUEST);
         }
