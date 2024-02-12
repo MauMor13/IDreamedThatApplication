@@ -1,6 +1,8 @@
 package com.DreamCompany.IDreamedThat.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,39 +16,48 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class PostDream {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long id;
+
+    @NotNull
+    @NotBlank
     private String title;
+
+    @NotNull
+    @NotBlank
     private boolean active = true;
+
     @Lob
+    @NotBlank
     private String story;
+
     private boolean edited = false;
+
+    @NotNull
     private boolean anonymous;
+
     private LocalDateTime creationDate = LocalDateTime.now();
 
-    //relacion con imagenes en el sueño
     @OneToMany(mappedBy = "postDream", fetch = FetchType.EAGER)
     private Set<ImageUrl> imagesDream = new HashSet<>();
 
-    //relacion con comentarios
     @OneToMany(mappedBy = "postDream", fetch = FetchType.EAGER)
     private Set<Comment> comments = new HashSet<>();
 
-    //relacion con likes
     @OneToMany(mappedBy = "postDream", fetch = FetchType.EAGER)
     private Set<LikeDream> likeDreams = new HashSet<>();
 
-    //relacion con usuario
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "social_user_id", nullable = false)
+    @JoinColumn(name = "social_user_id")
     SocialUser socialUser;
 
-    //relacion con categorias
     @ManyToMany
     @JoinTable(
-            name = "postdream_category",
-            joinColumns = @JoinColumn(name = "postdream_id"),
+            name = "post_dream_category",
+            joinColumns = @JoinColumn(name = "post_dream_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories = new HashSet<>();
@@ -70,5 +81,9 @@ public class PostDream {
     public void addComment(Comment comment){
         comment.setPostDream(this);
         this.comments.add(comment);
+    }
+    public void addSocialUser(SocialUser socialUser){
+        socialUser.getPostDreams().add(this);
+        this.setSocialUser(socialUser);
     }
 }
