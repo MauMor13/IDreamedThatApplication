@@ -48,4 +48,12 @@ public class SocialUserController {
 
         return servicePostDream.newPostDream(title, story, anonymous, idCategory, images);
     }
+
+    @GetMapping("/user/get_user_auth")
+    public ResponseEntity<Object> getUserAuth(){
+
+        return serviceSocialUser.getUserAuth();
+
+    }
+
 }

@@ -15,4 +15,5 @@ public interface ServiceSocialUser {
     ResponseEntity<Object> socialUserSignup(SocialUserSignupDTO socialUserSignupDTO) throws MessagingException, UnsupportedEncodingException;
     void confirmRegistration(String token, HttpServletResponse response) throws IllegalArgumentException;
     SocialUser findByEmail(String email);
+    ResponseEntity<Object> getUserAuth();
 }

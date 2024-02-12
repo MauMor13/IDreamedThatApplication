@@ -1,5 +1,6 @@
 package com.DreamCompany.IDreamedThat.services.impl;
 
+import com.DreamCompany.IDreamedThat.DTOs.SocialUserDTO;
 import com.DreamCompany.IDreamedThat.DTOs.SocialUserSignupDTO;
 import com.DreamCompany.IDreamedThat.models.Keystore;
 import com.DreamCompany.IDreamedThat.models.SocialUser;
@@ -11,6 +12,8 @@ import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.io.UnsupportedEncodingException;
@@ -83,6 +86,15 @@ public class ServiceSocialUserImpl implements ServiceSocialUser {
         else{
             throw new IllegalArgumentException("incorrect key");
         }
+    }
+
+    @Override
+    public ResponseEntity<Object> getUserAuth(){
+        Authentication authenticationUser = SecurityContextHolder.getContext().getAuthentication();
+        if (authenticationUser == null){
+            return new ResponseEntity<>("User not found", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new SocialUserDTO( this.findByEmail(authenticationUser.getName()) ),HttpStatus.OK );
     }
 
 }
