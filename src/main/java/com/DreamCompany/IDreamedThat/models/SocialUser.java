@@ -39,11 +39,6 @@ public class SocialUser extends Person{
         this.nickName = nickName;
     }
 
-    public void addPostDream(PostDream postDream){
-        postDream.setSocialUser(this);
-        this.postDreams.add(postDream);
-    }
-
     public void addComment(Comment comment){
         comment.setSocialUser(this);
         this.comments.add(comment);
