@@ -22,11 +22,9 @@ import java.util.List;
 @RestController
 public class SocialUserController {
     private final ServiceSocialUser serviceSocialUser;
-    private final ServicePostDream servicePostDream;
 
-    public SocialUserController(ServiceSocialUser serviceSocialUser, ServicePostDream servicePostDream) {
+    public SocialUserController(ServiceSocialUser serviceSocialUser) {
         this.serviceSocialUser = serviceSocialUser;
-        this.servicePostDream = servicePostDream;
     }
 
     @PostMapping("/signup")
@@ -39,21 +37,18 @@ public class SocialUserController {
         serviceSocialUser.confirmRegistration(token, response);
     }
 
-    @PostMapping(value="/user/new_post",consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> newPostDream(@RequestParam("title") @NotBlank @Size(min = 3, max = 30) String title,
-                                               @RequestParam("story") @NotBlank @Size(min = 100, max = 300) String story,
-                                               @RequestParam("anonymous") @NotNull Boolean anonymous,
-                                               @RequestParam("idCategory") @NotNull List<Integer> idCategory,
-                                               @RequestParam(value = "images", required = false) List<MultipartFile> images) throws IOException {
-
-        return servicePostDream.newPostDream(title, story, anonymous, idCategory, images);
-    }
-
     @GetMapping("/user/get_user_auth")
     public ResponseEntity<Object> getUserAuth(){
 
         return serviceSocialUser.getUserAuth();
-
     }
 
+    @PatchMapping(value = "/user/attribute_modification", consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> patchAttribute(@RequestParam(required = false) String name,
+                                                 @RequestParam(required = false) String lastName,
+                                                 @RequestParam(required = false) MultipartFile image,
+                                                 @RequestParam(required = false) String borderColorImg) throws IOException {
+
+        return serviceSocialUser.patchAttribute(name, lastName, image, borderColorImg);
+    }
 }

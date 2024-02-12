@@ -15,10 +15,15 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class SocialUser extends Person{
+
     private String nickName;
+
     private boolean active = false;
+
     private String imgAvatarUrl;
+
     private String borderColorImg;
+
     private LocalDate creationDate = LocalDate.now();
 
     @OneToMany(mappedBy = "socialUser", fetch = FetchType.EAGER)
@@ -30,8 +35,9 @@ public class SocialUser extends Person{
     @OneToMany(mappedBy = "socialUser", fetch = FetchType.EAGER)
     private Set<LikeDream> likeDreams = new HashSet<>();
 
-    public SocialUser(String name, String lastName, String password, String email) {
+    public SocialUser(String name, String lastName, String password, String email,String nickName) {
         super(name, lastName, password, email, Role.USER);
+        this.nickName = nickName;
     }
 
     public SocialUser(String email, String nickName, String password){

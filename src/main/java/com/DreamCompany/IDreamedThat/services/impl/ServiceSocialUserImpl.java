@@ -2,12 +2,14 @@ package com.DreamCompany.IDreamedThat.services.impl;
 
 import com.DreamCompany.IDreamedThat.DTOs.SocialUserDTO;
 import com.DreamCompany.IDreamedThat.DTOs.SocialUserSignupDTO;
+import com.DreamCompany.IDreamedThat.awsS3Config.awsS3Services.S3Service;
 import com.DreamCompany.IDreamedThat.models.Keystore;
 import com.DreamCompany.IDreamedThat.models.SocialUser;
 import com.DreamCompany.IDreamedThat.repositories.RepositorySocialUser;
 import com.DreamCompany.IDreamedThat.services.ServicePerson;
 import com.DreamCompany.IDreamedThat.services.ServiceSocialUser;
 import com.DreamCompany.IDreamedThat.services.sendEmail.ServiceSendEmail;
+import com.amazonaws.services.kafka.model.S3;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,12 +31,18 @@ public class ServiceSocialUserImpl implements ServiceSocialUser {
     private final ServicePerson servicePerson;
     private final ServiceSendEmail serviceSendEmail;
     private final PasswordEncoder passwordEncoder;
+    private final S3Service s3Service;
 
-    public ServiceSocialUserImpl(RepositorySocialUser repositorySocialUser, ServicePerson servicePerson, PasswordEncoder passwordEncoder,  ServiceSendEmail serviceSendEmail) {
+    public ServiceSocialUserImpl(RepositorySocialUser repositorySocialUser,
+                                 ServicePerson servicePerson,
+                                 PasswordEncoder passwordEncoder,
+                                 ServiceSendEmail serviceSendEmail,
+                                 S3Service s3Service) {
         this.repositorySocialUser = repositorySocialUser;
         this.servicePerson = servicePerson;
         this.passwordEncoder = passwordEncoder;
         this.serviceSendEmail = serviceSendEmail;
+        this.s3Service = s3Service;
     }
 
     @Override
@@ -97,4 +108,31 @@ public class ServiceSocialUserImpl implements ServiceSocialUser {
         return new ResponseEntity<>(new SocialUserDTO( this.findByEmail(authenticationUser.getName()) ),HttpStatus.OK );
     }
 
+    @Override
+    public ResponseEntity<Object> patchAttribute(String name, String lastName, MultipartFile image, String borderColorImg) throws IOException {
+
+        Authentication authenticationUser = SecurityContextHolder.getContext().getAuthentication();
+        if (authenticationUser == null){
+            return new ResponseEntity<>("User not found", HttpStatus.BAD_REQUEST);
+        }
+        SocialUser userAuth = this.findByEmail(authenticationUser.getName());
+
+        if (!name.isEmpty())
+            userAuth.setName(name);
+
+        if (!lastName.isEmpty())
+            userAuth.setLastName(lastName);
+
+        if (!borderColorImg.isEmpty())
+            userAuth.setBorderColorImg(borderColorImg);
+
+        if(!image.isEmpty()){
+            userAuth.setImgAvatarUrl("imageProfile" + userAuth.getNickName());
+            s3Service.createObject(userAuth.getImgAvatarUrl(), image);
+        }
+
+        servicePerson.save(userAuth);
+
+        return new ResponseEntity<>("Modification ok", HttpStatus.OK);
+    }
 }

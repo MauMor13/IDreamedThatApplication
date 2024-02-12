@@ -23,7 +23,7 @@ public class IDreamedThatApplication {
 		return (args) -> {
 			servicePerson.save(new Admin("Mauricio", "Mores", passwordEncoder.encode("Mauri1312"), "mauri.f.mores@gmail.com"));
 			//test user
-			SocialUser primeUser = new SocialUser("Marcos","Perez", passwordEncoder.encode("pedro1234"),"pedro14@gmail.com");
+			SocialUser primeUser = new SocialUser("Marcos","Perez", passwordEncoder.encode("pedro1234"),"pedro14@gmail.com","pedrote12");
 			primeUser.setActive(true);
 			servicePerson.save(primeUser);
 
