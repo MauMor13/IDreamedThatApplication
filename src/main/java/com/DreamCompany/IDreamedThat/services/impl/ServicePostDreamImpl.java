@@ -54,7 +54,7 @@ public class ServicePostDreamImpl implements ServicePostDream {
     @Override
     public ResponseEntity<Object> newPostDream(NewPostDreamDTO newPostDreamDTO) throws IOException {
         PostDream newPost = new PostDream(newPostDreamDTO.getTitle(), newPostDreamDTO.getStory(), newPostDreamDTO.isAnonymous());
-        for( Integer categoryId : newPostDreamDTO.getCategoryIds()){
+        for( Integer categoryId : newPostDreamDTO.getIdCategory()){
             Optional<Category> category = serviceCategory.findById(Long.valueOf(categoryId));
             category.ifPresent(newPost::addCategory);
         }
@@ -69,7 +69,7 @@ public class ServicePostDreamImpl implements ServicePostDream {
         }
         Authentication authenticationUser = SecurityContextHolder.getContext().getAuthentication();
         SocialUser socialUserAuth = serviceSocialUser.findByEmail(authenticationUser.getName());
-        socialUserAuth.addPostDream(newPost);
+        newPost.addSocialUser(socialUserAuth);
         this.save(newPost);
         servicePerson.save(socialUserAuth);
        return new ResponseEntity<>("Create new post dream", HttpStatus.CREATED);
