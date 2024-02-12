@@ -29,7 +29,7 @@ public class NewPostDreamDTO {
     private boolean anonymous;
 
     @NotNull
-    private List<Integer> categoryIds;
+    private List<Integer> idCategory;
 
     private List<MultipartFile> images;
 
@@ -37,7 +37,8 @@ public class NewPostDreamDTO {
         this.title = title;
         this.story = story;
         this.anonymous = anonymous;
-        this.categoryIds = idCategory;
+        this.idCategory = idCategory;
         this.images = images;
     }
+
 }
