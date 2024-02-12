@@ -1,6 +1,5 @@
 package com.DreamCompany.IDreamedThat.services.impl;
 
-import com.DreamCompany.IDreamedThat.DTOs.NewPostDreamDTO;
 import com.DreamCompany.IDreamedThat.awsS3Config.awsS3Services.S3Service;
 import com.DreamCompany.IDreamedThat.models.Category;
 import com.DreamCompany.IDreamedThat.models.ImageUrl;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,14 +52,14 @@ public class ServicePostDreamImpl implements ServicePostDream {
     }
 
     @Override
-    public ResponseEntity<Object> newPostDream(NewPostDreamDTO newPostDreamDTO) throws IOException {
-        PostDream newPost = new PostDream(newPostDreamDTO.getTitle(), newPostDreamDTO.getStory(), newPostDreamDTO.isAnonymous());
-        for( Integer categoryId : newPostDreamDTO.getIdCategory()){
+    public ResponseEntity<Object> newPostDream(String title, String story, boolean anonymous, List<Integer> idCategory,List<MultipartFile> images) throws IOException {
+        PostDream newPost = new PostDream(title, story, anonymous);
+        for( Integer categoryId : idCategory){
             Optional<Category> category = serviceCategory.findById(Long.valueOf(categoryId));
             category.ifPresent(newPost::addCategory);
         }
-        if (!newPostDreamDTO.getImages().isEmpty()){
-            for (MultipartFile image : newPostDreamDTO.getImages()){
+        if (!images.isEmpty()){
+            for (MultipartFile image : images){
                 ImageUrl imageUrl = new ImageUrl();
                 imageUrl.setImgUrl("imagePostDream" + imageUrl.getId());
                 newPost.addImageDream(imageUrl);
