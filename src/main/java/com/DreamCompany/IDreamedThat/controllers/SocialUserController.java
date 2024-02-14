@@ -1,22 +1,15 @@
 package com.DreamCompany.IDreamedThat.controllers;
 
 import com.DreamCompany.IDreamedThat.DTOs.SocialUserSignupDTO;
-import com.DreamCompany.IDreamedThat.services.ServicePostDream;
 import com.DreamCompany.IDreamedThat.services.ServiceSocialUser;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 @RequestMapping("/api")
 @RestController
@@ -51,4 +44,5 @@ public class SocialUserController {
 
         return serviceSocialUser.patchAttribute(name, lastName, image, borderColorImg);
     }
+
 }

@@ -9,7 +9,6 @@ import com.DreamCompany.IDreamedThat.repositories.RepositorySocialUser;
 import com.DreamCompany.IDreamedThat.services.ServicePerson;
 import com.DreamCompany.IDreamedThat.services.ServiceSocialUser;
 import com.DreamCompany.IDreamedThat.services.sendEmail.ServiceSendEmail;
-import com.amazonaws.services.kafka.model.S3;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
@@ -102,10 +100,19 @@ public class ServiceSocialUserImpl implements ServiceSocialUser {
     @Override
     public ResponseEntity<Object> getUserAuth(){
         Authentication authenticationUser = SecurityContextHolder.getContext().getAuthentication();
+
         if (authenticationUser == null){
             return new ResponseEntity<>("User not found", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(new SocialUserDTO( this.findByEmail(authenticationUser.getName()) ),HttpStatus.OK );
+
+        SocialUser socialUserAuth = this.findByEmail(authenticationUser.getName());
+        SocialUserDTO socialUserDTO = new SocialUserDTO(socialUserAuth);
+
+        if (socialUserAuth.getImgAvatarUrl() != null) {
+            socialUserDTO.setImageProfile(s3Service.getObject(socialUserAuth.getImgAvatarUrl()));
+        }
+
+        return new ResponseEntity<>(socialUserDTO ,HttpStatus.OK);
     }
 
     @Override
@@ -127,7 +134,7 @@ public class ServiceSocialUserImpl implements ServiceSocialUser {
             userAuth.setBorderColorImg(borderColorImg);
 
         if(!image.isEmpty()){
-            userAuth.setImgAvatarUrl("imageProfile" + userAuth.getNickName());
+            userAuth.setImgAvatarUrl("imgProfile" + userAuth.getId());
             s3Service.createObject(userAuth.getImgAvatarUrl(), image);
         }
 
