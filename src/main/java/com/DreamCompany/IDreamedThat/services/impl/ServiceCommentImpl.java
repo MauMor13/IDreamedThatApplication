@@ -41,10 +41,6 @@ public class ServiceCommentImpl implements ServiceComment {
             return new ResponseEntity<>("Social User not exist", HttpStatus.BAD_REQUEST);
         }
 
-        /*if (newCommentDTO.getTextComment().isBlank()){
-            return new ResponseEntity<>("The text is blank", HttpStatus.BAD_REQUEST);
-        }*/
-
         Comment newComment = new Comment(newCommentDTO.getTextComment());
 
         socialUser.addComment(newComment);
