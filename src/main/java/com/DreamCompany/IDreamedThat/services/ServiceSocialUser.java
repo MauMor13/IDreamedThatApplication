@@ -12,11 +12,13 @@ import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 public interface ServiceSocialUser {
+    void save(SocialUser socialUser);
     boolean existsByNickName(String nickname);
     boolean emailIsValid(String email);
     ResponseEntity<Object> socialUserSignup(SocialUserSignupDTO socialUserSignupDTO) throws MessagingException, UnsupportedEncodingException;
     void confirmRegistration(String token, HttpServletResponse response) throws IllegalArgumentException;
     SocialUser findByEmail(String email);
     ResponseEntity<Object> getUserAuth();
+    SocialUser findById(long id);
     ResponseEntity<Object> patchAttribute(String name, String lastName, MultipartFile image, String borderColorImg) throws IOException;
 }

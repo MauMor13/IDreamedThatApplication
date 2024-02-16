@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,7 @@ public class PostDreamController {
         this.servicePostDream = servicePostDream;
     }
 
+    @Transactional
     @PostMapping(value="/user/new_post",consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> newPostDream(@RequestParam("title") @NotBlank @Size(min = 3, max = 30) String title,
                                                @RequestParam("story") @NotBlank @Size(min = 100, max = 300) String story,

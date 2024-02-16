@@ -19,7 +19,6 @@ public class PostDream {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private long id;
 
     @NotNull
@@ -27,7 +26,6 @@ public class PostDream {
     private String title;
 
     @NotNull
-    @NotBlank
     private boolean active = true;
 
     @Lob

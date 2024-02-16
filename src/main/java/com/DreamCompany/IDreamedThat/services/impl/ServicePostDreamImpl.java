@@ -52,19 +52,25 @@ public class ServicePostDreamImpl implements ServicePostDream {
     }
 
     @Override
+    public PostDream findById(long id){ return repositoryPostDream.findById(id); }
+
+    @Override
     public ResponseEntity<Object> newPostDream(String title, String story, boolean anonymous, List<Integer> idCategory,List<MultipartFile> images) throws IOException {
         PostDream newPost = new PostDream(title, story, anonymous);
         for( Integer categoryId : idCategory){
             Optional<Category> category = serviceCategory.findById(Long.valueOf(categoryId));
             category.ifPresent(newPost::addCategory);
         }
-        if (!images.isEmpty()){
+
+        if (images != null && !images.isEmpty()){
             for (MultipartFile image : images){
-                ImageUrl imageUrl = new ImageUrl();
-                imageUrl.setImgUrl("imagePostDream" + imageUrl.getId());
-                newPost.addImageDream(imageUrl);
-                serviceImageUrl.save(imageUrl);
-                s3Service.createObject(imageUrl.getImgUrl(), image);
+                if (image != null && !image.isEmpty()){
+                    ImageUrl imageUrl = new ImageUrl();
+                    imageUrl.setImgUrl("imagePostDream" + imageUrl.getId());
+                    newPost.addImageDream(imageUrl);
+                    serviceImageUrl.save(imageUrl);
+                    s3Service.createObject(imageUrl.getImgUrl(), image);
+                }
             }
         }
         Authentication authenticationUser = SecurityContextHolder.getContext().getAuthentication();
