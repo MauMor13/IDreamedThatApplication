@@ -96,4 +96,12 @@ public class ServicePostDreamImpl implements ServicePostDream {
         return new ResponseEntity<>(postDreamDTO, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<Object> getPostDreamId(long id){
+        if ( !repositoryPostDream.existsById(id) ){
+            return new ResponseEntity<>("No dream post found", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new PostDreamDTO( repositoryPostDream.findById(id) ),HttpStatus.ACCEPTED);
+    }
+
 }

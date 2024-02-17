@@ -13,4 +13,5 @@ public interface ServicePostDream {
     void save(PostDream postDream);
     ResponseEntity<Object> newPostDream(String title, String story, boolean anonymous, List<Integer> idCategory, List<MultipartFile> images) throws IOException;
     ResponseEntity<Object> getPostsUser();
+    ResponseEntity<Object> getPostDreamId(long id);
 }
