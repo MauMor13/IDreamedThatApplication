@@ -106,18 +106,15 @@ public class ServiceSocialUserImpl implements ServiceSocialUser {
     @Override
     public ResponseEntity<Object> getUserAuth(){
         Authentication authenticationUser = SecurityContextHolder.getContext().getAuthentication();
-
         if (authenticationUser == null){
             return new ResponseEntity<>("User not found", HttpStatus.BAD_REQUEST);
         }
 
         SocialUser socialUserAuth = this.findByEmail(authenticationUser.getName());
         SocialUserDTO socialUserDTO = new SocialUserDTO(socialUserAuth);
-
         if (socialUserAuth.getImgAvatarUrl() != null) {
             socialUserDTO.setImageProfile(s3Service.getObject(socialUserAuth.getImgAvatarUrl()));
         }
-
         return new ResponseEntity<>(socialUserDTO ,HttpStatus.OK);
     }
 

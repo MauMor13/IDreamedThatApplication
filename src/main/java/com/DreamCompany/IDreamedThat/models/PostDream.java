@@ -50,7 +50,7 @@ public class PostDream {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "social_user_id")
-    SocialUser socialUser;
+    private SocialUser socialUser;
 
     @ManyToMany
     @JoinTable(

@@ -31,10 +31,7 @@ public class SocialUserController {
     }
 
     @GetMapping("/user/get_user_auth")
-    public ResponseEntity<Object> getUserAuth(){
-
-        return serviceSocialUser.getUserAuth();
-    }
+    public ResponseEntity<Object> getUserAuth(){ return serviceSocialUser.getUserAuth(); }
 
     @PatchMapping(value = "/user/attribute_modification", consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> patchAttribute(@RequestParam(required = false) String name,

@@ -7,10 +7,7 @@ import jakarta.validation.constraints.Size;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
@@ -34,4 +31,8 @@ public class PostDreamController {
 
         return servicePostDream.newPostDream(title, story, anonymous, idCategory, images);
     }
+
+    @GetMapping("/user/user_post")
+    public ResponseEntity<Object> getPostsUser(){ return servicePostDream.getPostsUser(); }
+
 }

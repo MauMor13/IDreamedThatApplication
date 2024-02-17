@@ -1,5 +1,6 @@
 package com.DreamCompany.IDreamedThat.services.impl;
 
+import com.DreamCompany.IDreamedThat.DTOs.PostDreamDTO;
 import com.DreamCompany.IDreamedThat.awsS3Config.awsS3Services.S3Service;
 import com.DreamCompany.IDreamedThat.models.Category;
 import com.DreamCompany.IDreamedThat.models.ImageUrl;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ServicePostDreamImpl implements ServicePostDream {
@@ -80,4 +82,18 @@ public class ServicePostDreamImpl implements ServicePostDream {
         servicePerson.save(socialUserAuth);
        return new ResponseEntity<>("Create new post dream", HttpStatus.CREATED);
     }
+
+    @Override
+    public ResponseEntity<Object> getPostsUser(){
+        Authentication authenticationUser = SecurityContextHolder.getContext().getAuthentication();
+        SocialUser socialUserAuth = serviceSocialUser.findByEmail(authenticationUser.getName());
+        List<PostDreamDTO> postDreamDTO = socialUserAuth.getPostDreams().stream().map(PostDreamDTO::new).toList();
+
+        if(postDreamDTO.isEmpty()){
+            return new ResponseEntity<>("No dream post found", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(postDreamDTO, HttpStatus.OK);
+    }
+
 }
