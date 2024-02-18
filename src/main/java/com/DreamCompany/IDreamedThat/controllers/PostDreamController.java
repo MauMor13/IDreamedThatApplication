@@ -36,8 +36,14 @@ public class PostDreamController {
     public ResponseEntity<Object> getPostsUser(){ return servicePostDream.getPostsUser(); }
 
     @GetMapping("/user/post_dream/{id}")
-    public ResponseEntity<Object> getPostDreamId(@PathVariable long id){
+    public ResponseEntity<Object> getPostDreamDTOId(@PathVariable long id){
         return servicePostDream.getPostDreamId(id);
     }
+
+    @GetMapping("/user/latest_posts")
+    public ResponseEntity<Object> getLatestPosts(){
+        return servicePostDream.getLatestPosts();
+    }
+
 
 }

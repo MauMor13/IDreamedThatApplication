@@ -54,7 +54,9 @@ public class ServicePostDreamImpl implements ServicePostDream {
     }
 
     @Override
-    public PostDream findById(long id){ return repositoryPostDream.findById(id); }
+    public List<PostDream> findLatestActivePosts() {
+        return repositoryPostDream.findTop20ActivePostDreamsOrderByCreationDateDesc();
+    }
 
     @Override
     public ResponseEntity<Object> newPostDream(String title, String story, boolean anonymous, List<Integer> idCategory,List<MultipartFile> images) throws IOException {
@@ -98,10 +100,18 @@ public class ServicePostDreamImpl implements ServicePostDream {
 
     @Override
     public ResponseEntity<Object> getPostDreamId(long id){
-        if ( !repositoryPostDream.existsById(id) ){
+        Optional<PostDream> postDreamOptional = repositoryPostDream.findById(id);
+        if (postDreamOptional.isEmpty()) {
             return new ResponseEntity<>("No dream post found", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(new PostDreamDTO( repositoryPostDream.findById(id) ),HttpStatus.ACCEPTED);
+        PostDream postDream = postDreamOptional.get();
+        PostDreamDTO postDreamDTO = new PostDreamDTO(postDream);
+        return new ResponseEntity<>(postDreamDTO, HttpStatus.ACCEPTED);
     }
 
+    @Override
+    public ResponseEntity<Object> getLatestPosts(){
+        List<PostDreamDTO> latestPosts = this.findLatestActivePosts().stream().map(PostDreamDTO::new).toList();
+        return new ResponseEntity<>(latestPosts, HttpStatus.ACCEPTED);
+    }
 }

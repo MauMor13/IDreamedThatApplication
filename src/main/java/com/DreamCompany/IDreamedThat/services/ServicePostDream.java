@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ServicePostDream {
-    PostDream findById(long id);
     void save(PostDream postDream);
     ResponseEntity<Object> newPostDream(String title, String story, boolean anonymous, List<Integer> idCategory, List<MultipartFile> images) throws IOException;
     ResponseEntity<Object> getPostsUser();
     ResponseEntity<Object> getPostDreamId(long id);
+    ResponseEntity<Object> getLatestPosts();
+    List<PostDream> findLatestActivePosts();
 }
