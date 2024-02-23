@@ -45,5 +45,4 @@ public class PostDreamController {
         return servicePostDream.getLatestPosts();
     }
 
-
 }

@@ -49,4 +49,8 @@ public class SocialUser extends Person{
         comment.setSocialUser(this);
         this.comments.add(comment);
     }
+    public void addLikeDream(LikeDream likeDream){
+        likeDream.setSocialUser(this);
+        this.likeDreams.add(likeDream);
+    }
 }

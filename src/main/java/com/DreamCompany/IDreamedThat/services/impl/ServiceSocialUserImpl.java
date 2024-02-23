@@ -46,6 +46,7 @@ public class ServiceSocialUserImpl implements ServiceSocialUser {
 
     @Override
     public void save(SocialUser socialUser){ repositorySocialUser.save(socialUser); }
+
     @Override
     public boolean existsByNickName(String nickname){ return  this.repositorySocialUser.existsByNickName(nickname); }
 

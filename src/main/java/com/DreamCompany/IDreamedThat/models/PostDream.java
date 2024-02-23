@@ -48,7 +48,7 @@ public class PostDream {
     @OneToMany(mappedBy = "postDream", fetch = FetchType.EAGER)
     private Set<LikeDream> likeDreams = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "social_user_id")
     private SocialUser socialUser;
 
@@ -83,5 +83,9 @@ public class PostDream {
     public void addSocialUser(SocialUser socialUser){
         socialUser.getPostDreams().add(this);
         this.setSocialUser(socialUser);
+    }
+    public void addLikeDream(LikeDream likeDream){
+        likeDream.setPostDream(this);
+        this.likeDreams.add(likeDream);
     }
 }

@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ServicePostDreamImpl implements ServicePostDream {
@@ -54,6 +53,9 @@ public class ServicePostDreamImpl implements ServicePostDream {
     }
 
     @Override
+    public Optional<PostDream> findById(long id){ return repositoryPostDream.findById(id); }
+
+    @Override
     public List<PostDream> findLatestActivePosts() {
         return repositoryPostDream.findTop20ActivePostDreamsOrderByCreationDateDesc();
     }
@@ -77,8 +79,7 @@ public class ServicePostDreamImpl implements ServicePostDream {
                 }
             }
         }
-        Authentication authenticationUser = SecurityContextHolder.getContext().getAuthentication();
-        SocialUser socialUserAuth = serviceSocialUser.findByEmail(authenticationUser.getName());
+        SocialUser socialUserAuth = serviceSocialUser.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         newPost.addSocialUser(socialUserAuth);
         this.save(newPost);
         servicePerson.save(socialUserAuth);
@@ -87,8 +88,7 @@ public class ServicePostDreamImpl implements ServicePostDream {
 
     @Override
     public ResponseEntity<Object> getPostsUser(){
-        Authentication authenticationUser = SecurityContextHolder.getContext().getAuthentication();
-        SocialUser socialUserAuth = serviceSocialUser.findByEmail(authenticationUser.getName());
+        SocialUser socialUserAuth = serviceSocialUser.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         List<PostDreamDTO> postDreamDTO = socialUserAuth.getPostDreams().stream().map(PostDreamDTO::new).toList();
 
         if(postDreamDTO.isEmpty()){
@@ -100,7 +100,7 @@ public class ServicePostDreamImpl implements ServicePostDream {
 
     @Override
     public ResponseEntity<Object> getPostDreamId(long id){
-        Optional<PostDream> postDreamOptional = repositoryPostDream.findById(id);
+        Optional<PostDream> postDreamOptional = this.findById(id);
         if (postDreamOptional.isEmpty()) {
             return new ResponseEntity<>("No dream post found", HttpStatus.BAD_REQUEST);
         }

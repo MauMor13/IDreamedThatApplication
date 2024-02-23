@@ -14,14 +14,14 @@ public class ServicePersonImpl implements ServicePerson {
     }
     @Override
     public Optional<Person> findByEmail(String email) {
-        return this.repositoryPerson.findByEmail(email);
+        return repositoryPerson.findByEmail(email);
     }
     @Override
     public void save(Person person) {
-        this.repositoryPerson.save(person);
+        repositoryPerson.save(person);
     }
     @Override
     public boolean existsByEmail(String email) {
-        return this.repositoryPerson.existsByEmail(email);
+        return repositoryPerson.existsByEmail(email);
     }
 }

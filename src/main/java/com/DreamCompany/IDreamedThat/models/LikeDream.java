@@ -14,7 +14,9 @@ public class LikeDream {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private LocalDate likeDate;
+
+    private LocalDate likeDate = LocalDate.now();
+
     private LikesType likesType;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -25,8 +27,7 @@ public class LikeDream {
     @JoinColumn(name = "post_dream_id")
     private PostDream postDream;
 
-    public LikeDream(LocalDate likeDate, LikesType likesType) {
-        this.likeDate = likeDate;
+    public LikeDream(LikesType likesType) {
         this.likesType = likesType;
     }
 }

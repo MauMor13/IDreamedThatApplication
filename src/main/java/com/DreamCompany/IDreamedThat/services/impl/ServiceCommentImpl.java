@@ -31,8 +31,8 @@ public class ServiceCommentImpl implements ServiceComment {
     @Override
     public  ResponseEntity<Object> newComment(NewCommentDTO newCommentDTO){
 
-        PostDream postDream = servicePostDream.findById(newCommentDTO.getIdPost());
-        if (postDream == null){
+        Optional<PostDream> postDream = servicePostDream.findById(newCommentDTO.getIdPost());
+        if (postDream.isEmpty()){
             return new ResponseEntity<>("Post dream not exist", HttpStatus.BAD_REQUEST);
         }
 
@@ -44,11 +44,11 @@ public class ServiceCommentImpl implements ServiceComment {
         Comment newComment = new Comment(newCommentDTO.getTextComment());
 
         socialUser.addComment(newComment);
-        postDream.addComment(newComment);
+        postDream.get().addComment(newComment);
 
         repositoryComment.save(newComment);
         serviceSocialUser.save(socialUser);
-        servicePostDream.save(postDream);
+        servicePostDream.save(postDream.get());
 
         return new ResponseEntity<>("create new comments", HttpStatus.CREATED);
     }
