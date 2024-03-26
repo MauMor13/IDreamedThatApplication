@@ -19,7 +19,7 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody PersonLoginDTO personLoginDTO) {
         Person authenticatedPerson = authenticationService.authenticate(personLoginDTO);
         String jwtToken = jwtService.generateToken(authenticatedPerson);
